@@ -8,12 +8,18 @@ var path = require('path')
 var chalk = require('chalk')
 var webpack = require('webpack')
 var config = require('../config')
-var webpackConfig = require('./webpack.prod.conf')
+var _module = process.argv[2]
+if (!_module) {
+  console.log('构建失败：请使用:npm run build [moduleName]')
+  return
+}
+
+var webpackConfig = require('./webpack.prod.conf')(_module)
+
 
 var spinner = ora('building for production...')
 spinner.start()
-
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
+rm(path.join(config.build.assetsRoot, _module, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
