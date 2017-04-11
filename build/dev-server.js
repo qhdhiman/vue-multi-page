@@ -1,3 +1,10 @@
+
+var _module = process.argv[2]
+if (!_module) {
+  console.log('构建失败：请使用:npm run dev [moduleName]')
+  return
+}
+
 require('./check-versions')()
 
 var config = require('../config')
@@ -10,9 +17,9 @@ var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
-var webpackConfig = process.env.NODE_ENV === 'testing'
+var webpackConfig = (process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
-  : require('./webpack.dev.conf')
+  : require('./webpack.dev.conf'))(_module)
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
