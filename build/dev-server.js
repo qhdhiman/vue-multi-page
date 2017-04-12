@@ -1,4 +1,3 @@
-
 var _module = process.argv[2]
 if (!_module) {
   console.log('构建失败：请使用:npm run dev [moduleName]')
